@@ -12,9 +12,9 @@ body {
     background-color: #0066ff;
     border-radius: 10px;
     display: block;
-    height: 320px;
+    height: 300px;
     margin: auto;
-    width: 320px;    
+    width: 310px;    
 }
 
 .board__button--updown {
@@ -50,12 +50,21 @@ body {
 }
 
 .board__tiles {
-    border: 2px white solid;
-    display: inline-block;
-    vertical-align:top
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: 200px;
+    border: 1px white solid;
 }
 
 .board__row {
     height: 50px;
+}
+
+.board__tiles--singletile {    
+    border: 1px white solid;
+    height: 48px;    
+    line-height: 50px;
+    text-align: center;
+    width: 48px;
 }
 
