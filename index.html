@@ -5,8 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>2048 game</title>
+    <link rel='stylesheet' href='normalize.css'>
+    <link rel='stylesheet' href='main.css'>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 <body>
+    <div class="container">
+        <h1 class="title">2048</h1>    
+        <div class="board">
+            <div class="board__button board__button--updown"><i class="fas fa-angle-up"></i></div>
+            <div class="board__button board__button--left"><i class="fas fa-angle-left"></i></div>
+            <div class="board__tiles">
+                <div class="board__row"></div>
+                <div class="board__row"></div>
+                <div class="board__row"></div>
+                <div class="board__row"></div>
+            </div>
+            <div class="board__button board__button--right"><i class="fas fa-angle-right"></i></div>
+            <div class="board__button board__button--updown"><i class="fas fa-angle-down"></i></div>
+        </div>    
+    </div>
     <script src="./2048.js"></script>
     <script>
         const two048 = new Game()
