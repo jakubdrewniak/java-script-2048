@@ -1,6 +1,7 @@
 body {
     background-color: #001433;
     color: white;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .title {
@@ -19,17 +20,17 @@ body {
 .board__button--updown {
     display: block;
     height: 50px;
-    padding: auto auto;
+    margin: auto;
     text-align: center;
-    
+    width: 200px;
 }
 
 .board__button--left, .board__button--right {        
     display: inline-flex;
     height: 200px;
     text-align: center;
-    width: 50px;
-    vertical-align:top
+    vertical-align:top;
+    width: 50px;    
 }
 
 .board__button--right {
