@@ -1,5 +1,8 @@
 function Game() {
-    this.gameBoardArray = [[0,0,0,0], [0,0,0,0], [0,0,0,0], [0,0,0,0]]
+    this.gameBoardArray =  [[2,4,4,4], 
+                            [0,0,0,0], 
+                            [4,0,0,0], 
+                            [0,0,4,0]]
     this.gameBoard = document.querySelector(".board__tiles")
     this.tilePosition = {x: 0, y:0}
     this.init()
@@ -13,6 +16,7 @@ Game.prototype.init = function () {
     this.placeTileOnBoard()
     this.render()
     this.startListeningArrowKeys()
+    // this.startListeningArrowButtons()
 
 }
 
@@ -38,12 +42,12 @@ Game.prototype.getRandomInt = function (min, max) {
 
 Game.prototype.render = function () {
     this.gameBoard.innerHTML = ''
-
     this.gameBoardArray.forEach(row => {
         row.forEach(cell => {
             this.renderSignleCell(cell)
         })
     })
+    console.log(this.gameBoardArray)
 }
 
 Game.prototype.renderSignleCell = function (cell) {
@@ -51,8 +55,6 @@ Game.prototype.renderSignleCell = function (cell) {
     cellElement.classList.add("board__tiles--singletile");
     cellElement.style.backgroundColor = this.getTileColor(cell)
     cellElement.innerHTML = cell? cell : null 
-    
-    console.log(cellElement)
     this.gameBoard.appendChild(cellElement)
 }
 
@@ -69,30 +71,66 @@ Game.prototype.startListeningArrowKeys = function () {
             switch (event.key) {
                 case 'ArrowUp':
                     event.preventDefault()
-                    console.log("uuup")
+                    this.moveUp()
                     break
                 case 'ArrowDown':
                     event.preventDefault()
-                    console.log("dooown")
+                    this.moveDown()
                     break
                 case 'ArrowLeft':
                     event.preventDefault()
-                    console.log("leeeft")
+                    this.moveLeft()
                     break
                 case 'ArrowRight':
                     event.preventDefault()
-                    console.log("right")
+                    this.moveRight()
                     break
             }
         }
     )
 }
 
-                    function myFunction() {
-                        console.log("workds")
-                        let k = new KeyboardEvent('keydown', {'keyCode':38, 'which':38})
-                        document.dispatchEvent(k);
-                    }
+// Game.prototype.startListeningArrowButtons = function () {
+//     document.querySelector(".fa-angle-up").addEventListener("click", this.moveUp)
+//     document.querySelector(".fa-angle-down").addEventListener("click", this.moveDown)
+//     document.querySelector(".fa-angle-left").addEventListener("click", this.moveLeft)
+//     document.querySelector(".fa-angle-right").addEventListener("click", this.moveRight)
+// }
+
+Game.prototype.moveUp = function () {
+    console.log("eventlistener up") 
+}
+Game.prototype.moveDown = function () {
+    console.log("eventlistener down")    
+}
+Game.prototype.moveLeft = function () {
+    for(let i=0; i<4; i++) {
+        let cleanRow = this.gameBoardArray[i].filter(x => x>0)
+        for(let j=0; j<cleanRow.length; j++){
+            if(cleanRow[j]===cleanRow[j+1]) {
+                cleanRow[j] += cleanRow[j+1]
+                cleanRow[j+1] = 0
+            }
+        }
+        cleanRow = cleanRow.filter(x => x>0)
+        while(cleanRow.length<4){cleanRow.push(0)}
+    this.gameBoardArray[i] = cleanRow
+    }
+    console.log(this.gameBoardArray)
+    
+    this.getNewTilePosition()
+    this.placeTileOnBoard()
+    this.render()
+}
+Game.prototype.moveRight = function () {
+    console.log("eventlistener right")    
+}
+
+Game.prototype.sumTiles = function() {
+    console.log("sumtiles")
+}
+
+
 
 
 
@@ -117,5 +155,5 @@ Game.prototype.startListeningArrowKeys = function () {
 
 
 Game.prototype.endGame = function () {
-    console.log("Game Over!")
+    alert("Game Over!")
 }
