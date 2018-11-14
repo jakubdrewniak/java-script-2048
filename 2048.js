@@ -104,8 +104,19 @@ Game.prototype.moveDown = function () {
     console.log("eventlistener down")    
 }
 Game.prototype.moveLeft = function () {
+    this.gameBoardArray = this.sumTiles(this.gameBoardArray)
+    this.reRender()
+}
+
+Game.prototype.moveRight = function () {
+    let reversedGameBoardArray = this.gameBoardArray.map(x=>x.reverse())
+    this.gameBoardArray = this.sumTiles(reversedGameBoardArray).map(x=>x.reverse())
+    this.reRender()
+}
+
+Game.prototype.sumTiles = function(arrayToSum) {
     for(let i=0; i<4; i++) {
-        let cleanRow = this.gameBoardArray[i].filter(x => x>0)
+        let cleanRow = arrayToSum[i].filter(x => x>0)
         for(let j=0; j<cleanRow.length; j++){
             if(cleanRow[j]===cleanRow[j+1]) {
                 cleanRow[j] += cleanRow[j+1]
@@ -114,22 +125,17 @@ Game.prototype.moveLeft = function () {
         }
         cleanRow = cleanRow.filter(x => x>0)
         while(cleanRow.length<4){cleanRow.push(0)}
-    this.gameBoardArray[i] = cleanRow
+        arrayToSum[i] = cleanRow
     }
-    console.log(this.gameBoardArray)
-    
+    console.log(arrayToSum)
+    return arrayToSum
+}
+
+Game.prototype.reRender = function() {
     this.getNewTilePosition()
     this.placeTileOnBoard()
     this.render()
 }
-Game.prototype.moveRight = function () {
-    console.log("eventlistener right")    
-}
-
-Game.prototype.sumTiles = function() {
-    console.log("sumtiles")
-}
-
 
 
 
