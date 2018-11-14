@@ -1,8 +1,8 @@
 function Game() {
-    this.gameBoardArray =  [[2,4,4,4], 
+    this.gameBoardArray =  [[0,0,0,0], 
                             [0,0,0,0], 
-                            [4,0,0,0], 
-                            [0,0,4,0]]
+                            [0,0,0,0], 
+                            [0,0,0,0]]
     this.gameBoard = document.querySelector(".board__tiles")
     this.tilePosition = {x: 0, y:0}
     this.init()
@@ -98,10 +98,17 @@ Game.prototype.startListeningArrowKeys = function () {
 // }
 
 Game.prototype.moveUp = function () {
-    console.log("eventlistener up") 
+    this.gameBoardArray = this.sumTiles(this.rotateArray())
+    // first rotate the array (first column became first row), make sum like in moveLeft, then rotate it again 
+    this.gameBoardArray = this.rotateArray()
+    this.reRender()
 }
 Game.prototype.moveDown = function () {
-    console.log("eventlistener down")    
+    let reversedRotatedGameBoardArray = this.rotateArray().map(x=>x.reverse())
+    this.gameBoardArray = this.sumTiles(reversedRotatedGameBoardArray)
+    this.gameBoardArray = this.gameBoardArray.map(x=>x.reverse())
+    this.gameBoardArray = this.rotateArray()
+    this.reRender()    
 }
 Game.prototype.moveLeft = function () {
     this.gameBoardArray = this.sumTiles(this.gameBoardArray)
@@ -111,6 +118,7 @@ Game.prototype.moveLeft = function () {
 Game.prototype.moveRight = function () {
     let reversedGameBoardArray = this.gameBoardArray.map(x=>x.reverse())
     this.gameBoardArray = this.sumTiles(reversedGameBoardArray).map(x=>x.reverse())
+    //reverse existing array, sum like for moveLeft, then reverse it again
     this.reRender()
 }
 
@@ -127,9 +135,20 @@ Game.prototype.sumTiles = function(arrayToSum) {
         while(cleanRow.length<4){cleanRow.push(0)}
         arrayToSum[i] = cleanRow
     }
-    console.log(arrayToSum)
     return arrayToSum
 }
+
+Game.prototype.rotateArray = function() {
+    let rotatedGameBoardArray = [[],[],[],[]]
+    for (let i=0; i<4; i++){
+        for(let j=0; j<4; j++){
+            rotatedGameBoardArray[i].push(this.gameBoardArray[j][i])
+        }
+    }
+    return rotatedGameBoardArray
+}
+
+
 
 Game.prototype.reRender = function() {
     this.getNewTilePosition()
