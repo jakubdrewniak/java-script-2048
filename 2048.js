@@ -3,6 +3,7 @@ function Game() {
                             [0,0,0,0], 
                             [0,0,0,0], 
                             [0,0,0,0]]
+    this.previousGameBoardArray
     this.gameBoard = document.querySelector(".board__tiles")
     this.tilePosition = {x: 0, y:0}    
     this.init()
@@ -18,7 +19,7 @@ Game.prototype.init = function () {
     this.render()
     this.startListeningArrowKeys()
     this.startListeningArrowButtons()
-
+    this.previousGameBoardArray = this.gameBoardArray
 }
 
 Game.prototype.getNewTilePosition = function () {
@@ -48,7 +49,6 @@ Game.prototype.render = function () {
             this.renderSignleCell(cell)
         })
     })
-    console.log(this.gameBoardArray)
 }
 
 Game.prototype.renderSignleCell = function (cell) {
@@ -98,19 +98,21 @@ Game.prototype.startListeningArrowButtons = function () {
     document.querySelector(".fa-angle-right").addEventListener("click", this.moveRight.bind(this))
 }
 
-Game.prototype.moveUp = function () {
+Game.prototype.moveUp = function () {    
     this.gameBoardArray = this.sumTiles(this.rotateArray())
     // first rotate the array (first column became first row), make sum like in moveLeft, then rotate it again 
     this.gameBoardArray = this.rotateArray()
     this.reRender()
+
 }
 Game.prototype.moveDown = function () {
     let reversedRotatedGameBoardArray = this.rotateArray().map(x=>x.reverse())
     this.gameBoardArray = this.sumTiles(reversedRotatedGameBoardArray)
     this.gameBoardArray = this.gameBoardArray.map(x=>x.reverse())
     this.gameBoardArray = this.rotateArray()
-    this.reRender()    
+    this.reRender()  
 }
+
 Game.prototype.moveLeft = function () {
     this.gameBoardArray = this.sumTiles(this.gameBoardArray)
     this.reRender()
@@ -150,11 +152,12 @@ Game.prototype.rotateArray = function() {
     return rotatedGameBoardArray
 }
 
-Game.prototype.reRender = function() {
+Game.prototype.reRender = function() {    
     this.getNewTilePosition()
     this.placeTileOnBoard()
     this.render()
     document.querySelector(".score").innerHTML= this.score
+    this.previousGameBoardArray = this.gameBoardArray    
 }
 
 Game.prototype.endGame = function () {
