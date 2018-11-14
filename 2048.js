@@ -4,12 +4,13 @@ function Game() {
                             [0,0,0,0], 
                             [0,0,0,0]]
     this.gameBoard = document.querySelector(".board__tiles")
-    this.tilePosition = {x: 0, y:0}
+    this.tilePosition = {x: 0, y:0}    
     this.init()
 
 }
 
 Game.prototype.init = function () {
+    this.score = 0    
     this.getNewTilePosition()
     this.placeTileOnBoard()
     this.getNewTilePosition()
@@ -128,6 +129,7 @@ Game.prototype.sumTiles = function(arrayToSum) {
         for(let j=0; j<cleanRow.length; j++){
             if(cleanRow[j]===cleanRow[j+1]) {
                 cleanRow[j] += cleanRow[j+1]
+                this.score += cleanRow[j]
                 cleanRow[j+1] = 0
             }
         }
@@ -152,33 +154,11 @@ Game.prototype.reRender = function() {
     this.getNewTilePosition()
     this.placeTileOnBoard()
     this.render()
+    document.querySelector(".score").innerHTML= this.score
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Game.prototype.endGame = function () {
-    alert("Game Over!")
+    alert("Game Over! Your score is " + this.score)
     this.gameBoardArray =  [[0,0,0,0], 
                             [0,0,0,0], 
                             [0,0,0,0], 
