@@ -3,7 +3,7 @@ function Game() {
                             [0,0,0,0], 
                             [0,0,0,0], 
                             [0,0,0,0]]
-    this.previousGameBoardArray
+    this.previousGameBoardArray = []
     this.gameBoard = document.querySelector(".board__tiles")
     this.tilePosition = {x: 0, y:0}    
     this.init()
@@ -19,7 +19,6 @@ Game.prototype.init = function () {
     this.render()
     this.startListeningArrowKeys()
     this.startListeningArrowButtons()
-    this.previousGameBoardArray = this.gameBoardArray
 }
 
 Game.prototype.getNewTilePosition = function () {
@@ -101,28 +100,40 @@ Game.prototype.startListeningArrowButtons = function () {
 Game.prototype.moveUp = function () {    
     this.gameBoardArray = this.sumTiles(this.rotateArray())
     // first rotate the array (first column became first row), make sum like in moveLeft, then rotate it again 
-    this.gameBoardArray = this.rotateArray()
-    this.reRender()
-
+    if(this.previousGameBoardArray.toString() !== this.rotateArray().toString()){
+        //checking if previous board is the same as calculated- if yes, movement is forbidden
+        this.gameBoardArray = this.rotateArray()
+        this.reRender()
+    } else {this.gameBoardArray = this.previousGameBoardArray}
 }
 Game.prototype.moveDown = function () {
     let reversedRotatedGameBoardArray = this.rotateArray().map(x=>x.reverse())
     this.gameBoardArray = this.sumTiles(reversedRotatedGameBoardArray)
     this.gameBoardArray = this.gameBoardArray.map(x=>x.reverse())
-    this.gameBoardArray = this.rotateArray()
-    this.reRender()  
+    if(this.previousGameBoardArray.toString() !== this.rotateArray().toString()){    
+        this.gameBoardArray = this.rotateArray()
+        this.reRender()  
+    } else {this.gameBoardArray = this.previousGameBoardArray}
 }
 
 Game.prototype.moveLeft = function () {
-    this.gameBoardArray = this.sumTiles(this.gameBoardArray)
-    this.reRender()
+    if(this.previousGameBoardArray.toString() !== this.sumTiles(this.gameBoardArray).toString()){
+        this.gameBoardArray = this.sumTiles(this.gameBoardArray)
+        this.reRender()
+    } else {this.gameBoardArray = this.previousGameBoardArray}
 }
 
 Game.prototype.moveRight = function () {
     let reversedGameBoardArray = this.gameBoardArray.map(x=>x.reverse())
-    this.gameBoardArray = this.sumTiles(reversedGameBoardArray).map(x=>x.reverse())
-    //reverse existing array, sum like for moveLeft, then reverse it again
-    this.reRender()
+    let reversedSumGameBoardArray = this.sumTiles(reversedGameBoardArray).map(x=>x.reverse())
+    this.gameBoardArray = this.previousGameBoardArray
+    if(this.previousGameBoardArray.map(x=>x.reverse()).toString() !== reversedSumGameBoardArray.toString()){
+        this.gameBoardArray = reversedSumGameBoardArray
+        //reverse existing array, sum like for moveLeft, then reverse it again
+        this.reRender()
+    } else {
+        this.gameBoardArray = this.previousGameBoardArray
+    }
 }
 
 Game.prototype.sumTiles = function(arrayToSum) {
@@ -152,12 +163,12 @@ Game.prototype.rotateArray = function() {
     return rotatedGameBoardArray
 }
 
-Game.prototype.reRender = function() {    
+Game.prototype.reRender = function() {  
     this.getNewTilePosition()
     this.placeTileOnBoard()
     this.render()
     document.querySelector(".score").innerHTML= this.score
-    this.previousGameBoardArray = this.gameBoardArray    
+    this.previousGameBoardArray= this.gameBoardArray 
 }
 
 Game.prototype.endGame = function () {
