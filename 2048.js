@@ -156,4 +156,9 @@ Game.prototype.sumTiles = function() {
 
 Game.prototype.endGame = function () {
     alert("Game Over!")
+    this.gameBoardArray =  [[0,0,0,0], 
+                            [0,0,0,0], 
+                            [0,0,0,0], 
+                            [0,0,0,0]]
+    this.init()
 }
