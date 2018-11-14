@@ -16,7 +16,7 @@ Game.prototype.init = function () {
     this.placeTileOnBoard()
     this.render()
     this.startListeningArrowKeys()
-    // this.startListeningArrowButtons()
+    this.startListeningArrowButtons()
 
 }
 
@@ -90,12 +90,12 @@ Game.prototype.startListeningArrowKeys = function () {
     )
 }
 
-// Game.prototype.startListeningArrowButtons = function () {
-//     document.querySelector(".fa-angle-up").addEventListener("click", this.moveUp)
-//     document.querySelector(".fa-angle-down").addEventListener("click", this.moveDown)
-//     document.querySelector(".fa-angle-left").addEventListener("click", this.moveLeft)
-//     document.querySelector(".fa-angle-right").addEventListener("click", this.moveRight)
-// }
+Game.prototype.startListeningArrowButtons = function () {
+    document.querySelector(".fa-angle-up").addEventListener("click", this.moveUp.bind(this))
+    document.querySelector(".fa-angle-down").addEventListener("click", this.moveDown.bind(this))
+    document.querySelector(".fa-angle-left").addEventListener("click", this.moveLeft.bind(this))
+    document.querySelector(".fa-angle-right").addEventListener("click", this.moveRight.bind(this))
+}
 
 Game.prototype.moveUp = function () {
     this.gameBoardArray = this.sumTiles(this.rotateArray())
@@ -147,8 +147,6 @@ Game.prototype.rotateArray = function() {
     }
     return rotatedGameBoardArray
 }
-
-
 
 Game.prototype.reRender = function() {
     this.getNewTilePosition()
