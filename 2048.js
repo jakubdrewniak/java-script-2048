@@ -91,10 +91,10 @@ Game.prototype.startListeningArrowKeys = function () {
 }
 
 Game.prototype.startListeningArrowButtons = function () {
-    document.querySelector(".fa-angle-up").addEventListener("click", this.moveUp.bind(this))
-    document.querySelector(".fa-angle-down").addEventListener("click", this.moveDown.bind(this))
-    document.querySelector(".fa-angle-left").addEventListener("click", this.moveLeft.bind(this))
-    document.querySelector(".fa-angle-right").addEventListener("click", this.moveRight.bind(this))
+    document.querySelector(".board__button--up").addEventListener("click", this.moveUp.bind(this))
+    document.querySelector(".board__button--down").addEventListener("click", this.moveDown.bind(this))
+    document.querySelector(".board__button--left").addEventListener("click", this.moveLeft.bind(this))
+    document.querySelector(".board__button--right").addEventListener("click", this.moveRight.bind(this))
 }
 
 Game.prototype.moveUp = function () {    

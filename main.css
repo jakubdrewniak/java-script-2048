@@ -19,7 +19,7 @@ body {
     width: 310px;    
 }
 
-.board__button--updown {
+.board__button--up, .board__button--down {
     display: block;
     height: 50px;
     margin: auto;
